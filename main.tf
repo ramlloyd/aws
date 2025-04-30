@@ -1,4 +1,3 @@
-
 provider "aws" {
   region = "us-east-1"
 }
@@ -6,6 +5,9 @@ provider "aws" {
 data "aws_subnet" "default" {
   default_for_az = true
   availability_zone = "us-east-1a"
+}
+resource "aws_eip" "apache_eip" {
+  instance = aws_instance.apache-server.id
 }
 
 resource "aws_security_group" "apache_sg" {
@@ -57,5 +59,4 @@ resource "aws_instance" "apache-server" {
 
 output "instance_public_ip" {
   value = aws_instance.apache-server.public_ip
-  
 }
